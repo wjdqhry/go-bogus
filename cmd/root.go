@@ -17,11 +17,8 @@ package cmd
 
 import (
 	"fmt"
-	"log"
 	"os"
-	"path/filepath"
 
-	. "github.com/dave/jennifer/jen"
 	"github.com/spf13/cobra"
 
 	homedir "github.com/mitchellh/go-homedir"
@@ -43,23 +40,7 @@ to quickly create a Cobra application.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	// Run: func(cmd *cobra.Command, args []string) { },
-	Run: func(cmd *cobra.Command, args []string) {
-		dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
-		if err != nil {
-			log.Fatal(err)
-		}
-		fmt.Println(dir)
-
-		f := NewFilePathName(dir, "main")
-		f.Func().Id("main").Params().Block(
-			Qual("fmt", "Println").Call(Lit("Hello, world")),
-		)
-		err = f.Save("asdf.go")
-		if err != nil {
-			log.Fatal(err)
-		}
-		fmt.Println("Hello CLI")
-	},
+	//Run:
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
