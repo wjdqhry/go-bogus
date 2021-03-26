@@ -15,7 +15,10 @@ limitations under the License.
 */
 package main
 
-import "go-bogus/cmd"
+import (
+	"github.com/wjdqhry/go-bogus/cmd"
+	//"github.com/spf13/cobra/cobra/cmd"
+)
 
 func main() {
 	cmd.Execute()
