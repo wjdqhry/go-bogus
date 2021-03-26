@@ -45,10 +45,10 @@ to quickly create a Cobra application.`,
 		fmt.Println(dir)
 
 		//forderSlice := strings.Split(dir, "/")
-		forderName := strings.SplitAfter(dir, "src/")[1]
-		if len(forderName) < 2 {
+		if !strings.Contains(dir, "src/") {
 			log.Fatal("It is not in GOPATH")
 		}
+		forderName := strings.SplitAfter(dir, "src/")[1]
 		//forderName := forderSlice[len(forderSlice)-1]
 
 		err = os.Mkdir("routes", os.ModePerm)
