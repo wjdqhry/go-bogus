@@ -62,8 +62,16 @@ to quickly create a Cobra application.`,
 
 		routesFile := NewFilePathName(dir+"/routes", "routes")
 		routesFile.ImportAlias("github.com/gofiber/fiber/v2", "fiber")
-		routesFile.Func().Id("RegisterApi").Params(Id("api").Qual("github.com/gofiber/fiber/v2", "Router")).Block()
-		routesFile.Save("routes.go")
+		routesFile.Func().Id("RegisterApi").Params(Id("api").Qual("github.com/gofiber/fiber/v2", "Router")).Block(
+			Id("api").Dot("Get").Call(Lit("/ping"), Func().Params(Id("c").Id("*fiber.Ctx")).Error().Block(
+				Return(Id("c").Dot("SendString").Call(Lit("pong"))),
+			)),
+			Line(),
+		)
+		err = routesFile.Save("routes.go")
+		if err != nil {
+			log.Fatal("routes err", err)
+		}
 
 		err = os.Chdir(dir)
 		if err != nil {
@@ -77,6 +85,8 @@ to quickly create a Cobra application.`,
 		// app.Listen(":12270")
 		fmt.Println("creating..")
 		f.ImportAlias("github.com/gofiber/fiber/v2", "fiber")
+		f.ImportAlias("github.com/gofiber/fiber/v2/middleware/recover", "recover")
+
 		//f.ImportName("github.com/gofiber/fiber/v2", "fiber")
 		f.Func().Id("main").Params().Block(
 			Qual("fmt", "Println").Call(Lit("Hello, world")),
